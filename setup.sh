@@ -15,9 +15,9 @@ apt install -y python3-full python3-venv curl
 echo "🔧 ساخت محیط مجازی در /opt/traffic-monitor-venv"
 python3 -m venv /opt/traffic-monitor-venv
 
-echo "🐍 نصب کتابخانه python-telegram-bot..."
+echo "🐍 نصب کتابخانه‌های مورد نیاز..."
 /opt/traffic-monitor-venv/bin/pip install --upgrade pip
-/opt/traffic-monitor-venv/bin/pip install python-telegram-bot
+/opt/traffic-monitor-venv/bin/pip install python-telegram-bot psutil
 
 echo "🧠 ساخت فایل پایتون با مقادیر وارد شده..."
 
@@ -49,7 +49,7 @@ def check_traffic():
 
     message = f"📡 [{SERVER_NAME}] ترافیک مصرفی در {timestamp}:\n🔻 مصرف کل: {used_mb:.2f} MB"
     if used_mb > THRESHOLD_MB:
-        message += f"\n🚨 هشدار: مصرف بیش از {THRESHOLD_MB}MB!"
+        message += f"\\n🚨 هشدار: مصرف بیش از {THRESHOLD_MB}MB!"
     send_message(message)
 
 if __name__ == "__main__":
