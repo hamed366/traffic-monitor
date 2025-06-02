@@ -19,12 +19,13 @@ class ProxyRequest(HTTPXRequest):
         client = httpx.AsyncClient(proxies=PROXY)
         super().__init__(client=client)
 
-# ایجاد یک بات جهانی فقط یک‌بار
-bot = Bot(token=TOKEN, request=ProxyRequest())
-
+# 💬 ساخت بات فقط در لحظه نیاز
 async def send_message(message: str):
+    request = ProxyRequest()
+    bot = Bot(token=TOKEN, request=request)
     await bot.send_message(chat_id=CHAT_ID, text=message)
 
+# 📊 بررسی مصرف شبکه
 async def check_traffic():
     rx_path = f"/sys/class/net/{INTERFACE}/statistics/rx_bytes"
     tx_path = f"/sys/class/net/{INTERFACE}/statistics/tx_bytes"
@@ -46,5 +47,6 @@ async def check_traffic():
             f"📊 مصرف: {total_gb:.2f} GB از {THRESHOLD_GB} GB"
         )
 
+# 🚀 اجرای اصلی
 if __name__ == "__main__":
     asyncio.run(check_traffic())
